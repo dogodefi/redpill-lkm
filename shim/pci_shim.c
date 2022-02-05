@@ -91,6 +91,18 @@ static int vdev_add_INTEL_I211(unsigned char bus_no, unsigned char dev_no, unsig
     return add_vdev(dev_dsc, bus_no, dev_no, fn_no, is_mf);
 }
 
+static int vdev_add_INTEL_X552(unsigned char bus_no, unsigned char dev_no, unsigned char fn_no, bool is_mf)
+{
+    allocate_vpci_dev_dsc_var();
+    dev_dsc->vid = PCI_VENDOR_ID_INTEL;
+    dev_dsc->dev = 0x15ad;
+    dev_dsc->rev_id = 0x03; //Not confirmed
+    dev_dsc->class = U16_CLASS_TO_U8_CLASS(PCI_CLASS_NETWORK_ETHERNET);
+    dev_dsc->subclass = U16_CLASS_TO_U8_SUBCLASS(PCI_CLASS_NETWORK_ETHERNET);
+    return add_vdev(dev_dsc, bus_no, dev_no, fn_no, is_mf);
+}
+
+
 static int vdev_add_INTEL_CPU_AHCI_CTRL(unsigned char bus_no, unsigned char dev_no, unsigned char fn_no, bool is_mf)
 {
     allocate_vpci_dev_dsc_var();
@@ -175,6 +187,7 @@ static int (*dev_type_handler_map[])(unsigned char bus_no, unsigned char dev_no,
         [VPD_MARVELL_88SE9235] = vdev_add_MARVELL_88SE9235,
         [VPD_MARVELL_88SE9215] = vdev_add_MARVELL_88SE9215,
         [VPD_INTEL_I211] = vdev_add_INTEL_I211,
+        [VPD_INTEL_X552] = vdev_add_INTEL_X552,
         [VPD_INTEL_CPU_AHCI_CTRL] = vdev_add_INTEL_CPU_AHCI_CTRL,
         [VPD_INTEL_CPU_PCIE_PA] = vdev_add_INTEL_CPU_PCIE_PA,
         [VPD_INTEL_CPU_PCIE_PB] = vdev_add_INTEL_CPU_PCIE_PB,
