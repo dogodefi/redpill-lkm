@@ -190,7 +190,7 @@ void reset_bios_shims(void)
 }
 
 /******************************** Kernel-level shims related to mfgBIOS functionality *********************************/
-extern void *funcSYNOSATADiskLedCtrl; //if this explodes one day we need to do kernel_has_symbol() on it dynamically
+// extern void *funcSYNOSATADiskLedCtrl; //if this explodes one day we need to do kernel_has_symbol() on it dynamically
 
 /*
  * Syno kernel has ifdefs for "MY_ABC_HERE" for syno_ahci_disk_led_enable() and syno_ahci_disk_led_enable_by_port() so
@@ -230,7 +230,7 @@ int shim_disk_leds_ctrl(const struct hw_config *hw)
 
     int out;
     //funcSYNOSATADiskLedCtrl exists on (almost?) all platforms, but it's null on some... go figure ;)
-    if (funcSYNOSATADiskLedCtrl) {
+/*    if (funcSYNOSATADiskLedCtrl) {
         ov_funcSYNOSATADiskLedCtrl = override_symbol("funcSYNOSATADiskLedCtrl", funcSYNOSATADiskLedCtrl_shim);
         if (unlikely(IS_ERR(ov_funcSYNOSATADiskLedCtrl))) {
             out = PTR_ERR(ov_funcSYNOSATADiskLedCtrl);
@@ -239,7 +239,7 @@ int shim_disk_leds_ctrl(const struct hw_config *hw)
             return out;
         }
     }
-
+*/
     if (kernel_has_symbol("syno_ahci_disk_led_enable")) {
         ov_syno_ahci_disk_led_enable = override_symbol("syno_ahci_disk_led_enable", syno_ahci_disk_led_enable_shim);
         if (unlikely(IS_ERR(ov_syno_ahci_disk_led_enable))) {
