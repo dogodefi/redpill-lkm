@@ -700,8 +700,7 @@ static driver_watch_notify_result serial8250_ready_watcher(struct device_driver 
     int out;
     for_each_vdev() {
         //non-initialized ports are these which were never added as vUARTs
-        //skip ports little then CONFIG_SYNO_TTYS_FUN_NUM
-        if (!ttySs[line].initialized || ttySs[line].registered || line < UART_SYNO_TTYS_FUN_NUM)
+        if (!ttySs[line].initialized || ttySs[line].registered)
             continue;
 
         pr_loc_dbg("Processing enqueued port %d", line);
