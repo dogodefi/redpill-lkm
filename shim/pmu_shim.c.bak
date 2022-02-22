@@ -88,7 +88,6 @@ static void cmd_shim_noop(const command_definition *t, const char *data, u8 data
 #define PMU_CMD_OUT_PWM_HZ 0x57 //"W"
 //0x58-59 unknown
 //0x60-71 inputs (except 6C)
-#define PMU_CMD_DISK_BAD_BLOCK_WARN_LOG_ID 0x6b //"k"
 #define PMU_CMD_OUT_WOL_ON 0x6c //"l"
 #define PMU_CMD_OUT_SCHED_UP_OFF 0x72 //"r"
 #define PMU_CMD_OUT_SCHED_UP_ON 0x73 //"s"
@@ -125,7 +124,6 @@ static const command_definition single_byte_cmds[single_byte_idx(PMU_CMD__MAX_CO
     DEFINE_SINGLE_BYTE_CMD(OUT_SCHED_UP_ON, cmd_shim_noop),
     DEFINE_SINGLE_BYTE_CMD(OUT_FAN_HEALTH_OFF, cmd_shim_noop),
     DEFINE_SINGLE_BYTE_CMD(OUT_FAN_HEALTH_ON, cmd_shim_noop),
-	DEFINE_SINGLE_BYTE_CMD(DISK_BAD_BLOCK_WARN_LOG_ID, cmd_shim_noop),
 };
 
 
