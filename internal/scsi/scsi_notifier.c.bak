@@ -85,7 +85,6 @@ static int sd_probe_shim(struct device *dev)
     }
 
     pr_loc_dbg("Calling original sd_probe()");
-	pr_loc_dbg("Print SYNO_PORT_TYPE_SATA type: %d",sdp->host->hostt->syno_port_type);
     out = org_sd_probe(dev);
     scsi_event evt = (out == 0) ? SCSI_EVT_DEV_PROBED_OK : SCSI_EVT_DEV_PROBED_ERR;
 
