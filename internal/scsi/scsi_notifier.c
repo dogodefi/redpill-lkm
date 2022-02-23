@@ -50,7 +50,7 @@
 #include "scsi_toolbox.h"
 #include "../intercept_driver_register.h" //watching for sd driver loading
 #include <scsi/scsi_device.h> //to_scsi_device()
-
+#include <scsi/scsi_host.h>
 #define NOTIFIER_NAME "SCSI device"
 
 /*********************************** Interacting with an active/loaded SCSI driver ************************************/
