@@ -43,10 +43,7 @@
  * Checks if we should fix a given device or ignore it
  */
 static bool is_fixable(struct scsi_device *sdp)
-{	
-	pr_loc_dbg("JUST PRINT HERE FOR DEBUG =\"%s\" model=\"%s\" connected to \"%s\" HBA over non-SATA port (type=%d) - "
-               "fixing to SATA port (type=%d)", sdp->vendor, sdp->model, sdp->host->hostt->name,
-               sdp->host->hostt->syno_port_type, SYNO_PORT_TYPE_SATA);
+{
     return sdp->host->hostt->syno_port_type == SYNO_PORT_TYPE_SAS ||
            (sdp->host->hostt->syno_port_type != SYNO_PORT_TYPE_SATA &&
             strcmp(sdp->host->hostt->name, VIRTIO_HOST_ID) == 0);
