@@ -6,13 +6,9 @@
 typedef struct device device;
 typedef struct scsi_device scsi_device;
 typedef int (on_scsi_device_cb)(struct scsi_device *sdp);
-#ifndef CONFIG_SYNO_SATA_DEVICE_NEW_PREFIX
-#define SCSI_DRV_NAME "sata"
-#else
+
 #define SCSI_DRV_NAME "sd" //useful for triggering watchers
 //To use this one import intercept_driver_register.h header (it's not imported here to avoid pollution)
-#endif
-
 #define watch_scsi_driver_register(callback, event_mask) \
     watch_driver_register(SCSI_DRV_NAME, (callback), (event_mask))
 
