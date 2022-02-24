@@ -50,6 +50,8 @@
 #include "scsi_toolbox.h"
 #include "../intercept_driver_register.h" //watching for sd driver loading
 #include <scsi/scsi_device.h> //to_scsi_device()
+#include <scsi/scsi_host.h>
+#include <linux/libata.h>
 
 #define NOTIFIER_NAME "SCSI device"
 
@@ -85,6 +87,11 @@ static int sd_probe_shim(struct device *dev)
     }
 
     pr_loc_dbg("Calling original sd_probe()");
+	struct ata_port *ap = NULL;
+	int b1;
+	ap = ata_shost_to_port(dev->host); 
+	b1 =(NULL != ap);
+	pr_loc_dbg("Calling original sd_probe()");
     out = org_sd_probe(dev);
     scsi_event evt = (out == 0) ? SCSI_EVT_DEV_PROBED_OK : SCSI_EVT_DEV_PROBED_ERR;
 

@@ -51,6 +51,8 @@
 #include "../intercept_driver_register.h" //watching for sd driver loading
 #include <scsi/scsi_device.h> //to_scsi_device()
 #include <scsi/scsi_host.h>
+#include <linux/libata.h>
+
 #define NOTIFIER_NAME "SCSI device"
 
 /*********************************** Interacting with an active/loaded SCSI driver ************************************/
@@ -85,7 +87,15 @@ static int sd_probe_shim(struct device *dev)
     }
 
     pr_loc_dbg("Calling original sd_probe()");
-	pr_loc_dbg("Print SYNO_PORT_TYPE_SATA type: %d",sdp->host->hostt->syno_port_type);
+//	struct ata_port *ap = NULL;
+//	int b1;
+//	ap = ata_shost_to_port(dev->host); 
+//	b1 =(NULL != ap);
+//	snprintf(dev->syno_block_info, BLOCK_INFO_SIZE, "%sphy=%d\n", sdev->syno_block_info, sdev->id);
+// snprintf(dev->syno_block_info, BLOCK_INFO_SIZE, "%sdriver=%s\n", sdev->syno_block_info, DT_MV14XX);
+//	print ("ap null bool: %d",b1);
+    dev->host->hostt->proc_name ="mv14xx";
+	pr_loc_dbg("Calling original sd_probe()");
     out = org_sd_probe(dev);
     scsi_event evt = (out == 0) ? SCSI_EVT_DEV_PROBED_OK : SCSI_EVT_DEV_PROBED_ERR;
 
