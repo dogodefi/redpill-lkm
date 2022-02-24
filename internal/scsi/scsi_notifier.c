@@ -94,7 +94,7 @@ static int sd_probe_shim(struct device *dev)
 //	snprintf(dev->syno_block_info, BLOCK_INFO_SIZE, "%sphy=%d\n", sdev->syno_block_info, sdev->id);
 // snprintf(dev->syno_block_info, BLOCK_INFO_SIZE, "%sdriver=%s\n", sdev->syno_block_info, DT_MV14XX);
 //	print ("ap null bool: %d",b1);
-    dev->host->hostt->proc_name ="mv14xx";
+    sdp->host->hostt->proc_name ="mv14xx";
 	pr_loc_dbg("Calling original sd_probe()");
     out = org_sd_probe(dev);
     scsi_event evt = (out == 0) ? SCSI_EVT_DEV_PROBED_OK : SCSI_EVT_DEV_PROBED_ERR;
