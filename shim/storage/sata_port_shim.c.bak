@@ -63,7 +63,7 @@ static int on_new_scsi_disk_device(struct scsi_device *sdp)
                "fixing to SAS port (type=%d)", sdp->vendor, sdp->model, sdp->host->hostt->name,
                sdp->host->hostt->syno_port_type, SYNO_PORT_TYPE_SAS);
 
-    sdp->host->hostt->syno_port_type = SYNO_PORT_TYPE_SAS;
+    sdp->host->hostt->syno_port_type = SYNO_PORT_TYPE_SATA;
 
     return 0;
 }
