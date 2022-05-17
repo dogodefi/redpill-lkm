@@ -260,9 +260,9 @@ static bool extract_netif_macs(mac_address *macs[MAX_NET_IFACES], const char *pa
         return false;
     }
 
-    //mac1=...mac4= are valid options. ASCII for 1 is 49, ASCII for 4 is 52
+    //mac1=...mac8= are valid options. ASCII for 1 is 49, ASCII for 8 is 56
     if (strncmp(param_pointer, "mac", 3) != 0 || *(param_pointer + 4) != '=' || *(param_pointer + 3) < 49 ||
-        *(param_pointer + 3) > 52)
+        *(param_pointer + 3) > 56)
         return false;
 
     //Find free spot
