@@ -252,7 +252,7 @@ static bool extract_netif_num(unsigned short *netif_num, const char *param_point
  */
 static bool extract_netif_macs(mac_address *macs[MAX_NET_IFACES], const char *param_pointer)
 {
-    
+    pr_loc_dbg("param pointer #%s#", param_pointer);
     if (strncmp(param_pointer, CMDLINE_KT_MACS, strlen_static(CMDLINE_KT_MACS)) == 0) {
         
         const char *ptr = param_pointer + strlen_static(CMDLINE_KT_MACS);
