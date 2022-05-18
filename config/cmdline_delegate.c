@@ -265,8 +265,10 @@ static bool extract_netif_macs(mac_address *macs[MAX_NET_IFACES], const char *pa
                     goto out_found;
             }
             
-            if(strscpy((char *)macs[i], ptr, sizeof(mac_address)) < 0)
-                pr_loc_wrn("MAC #%d truncated to %zu", i+1, sizeof(mac_address)-1);
+            memcpy((char *)macs[i], ptr, sizeof(mac_address) - 1);
+            *((char *)macs[i] + sizeof(mac_address) - 1) = '\0';
+            // if(strscpy((char *)macs[i], ptr, sizeof(mac_address)) < 0)
+            //     pr_loc_wrn("MAC #%d truncated to %zu", i+1, sizeof(mac_address)-1);
 
             pr_loc_dbg("Set MAC #%d: %s", i+1, (char *)macs[i]);
             
