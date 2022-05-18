@@ -252,18 +252,44 @@ static bool extract_netif_num(unsigned short *netif_num, const char *param_point
  */
 static bool extract_netif_macs(mac_address *macs[MAX_NET_IFACES], const char *param_pointer)
 {
+    
     if (strncmp(param_pointer, CMDLINE_KT_MACS, strlen_static(CMDLINE_KT_MACS)) == 0) {
-        //TODO: implement macs=
-        pr_loc_err("\"%s\" is not implemented, use %s...%s instead >>>%s<<<", CMDLINE_KT_MACS, CMDLINE_KT_MAC1,
-                   CMDLINE_KT_MAC4, param_pointer);
+        
+        const char *ptr = param_pointer + strlen_static(CMDLINE_KT_MACS);
+        unsigned short i = 0;
+        while (true) {
+            macs[i] = kmalloc(sizeof(mac_address), GFP_KERNEL);
+            if (unlikely(!macs[i])) {
+                    pr_loc_crt("kernel memory alloc failure - tried to allocate %lu bytes for macs[%d]", sizeof(mac_address),
+                            i);
+                    goto out_found;
+            }
+            
+            if(strscpy((char *)macs[i], ptr, sizeof(mac_address)) < 0)
+                pr_loc_wrn("MAC #%d truncated to %zu", i+1, sizeof(mac_address)-1);
 
-        return true;
+            pr_loc_dbg("Set MAC #%d: %s", i+1, (char *)macs[i]);
+            
+            ptr += sizeof(mac_address);
+            
+            if (ptr == '\0')
+                goto out_found;
+            
+            ptr++;
+            i++;
+        }
+        // TODO: implement macs=
+        // pr_loc_err("\"%s\" is not implemented, use %s...%s instead >>>%s<<<", CMDLINE_KT_MACS, CMDLINE_KT_MAC1,
+        //            CMDLINE_KT_MAC4, param_pointer);
+
+        // return true;
     }
 
     //mac1=...mac8= are valid options. ASCII for 1 is 49, ASCII for 8 is 56
     if (strncmp(param_pointer, "mac", 3) != 0 || *(param_pointer + 4) != '=' || *(param_pointer + 3) < 49 ||
         *(param_pointer + 3) > 56)
         return false;
+    
 
     //Find free spot
     unsigned short i = 0;
