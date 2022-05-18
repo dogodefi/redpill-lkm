@@ -270,7 +270,7 @@ static bool extract_netif_macs(mac_address *macs[MAX_NET_IFACES], const char *pa
 
             pr_loc_dbg("Set MAC #%d: %s", i+1, (char *)macs[i]);
             
-            ptr += sizeof(mac_address);
+            ptr += sizeof(mac_address) - 1;
             
             if (ptr == '\0')
                 goto out_found;
