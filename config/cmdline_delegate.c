@@ -274,7 +274,7 @@ static bool extract_netif_macs(mac_address *macs[MAX_NET_IFACES], const char *pa
             
             ptr += sizeof(mac_address) - 1;
             
-            if (ptr == '\0')
+            if (*ptr == '\0')
                 goto out_found;
             
             ptr++;
