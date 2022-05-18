@@ -257,7 +257,7 @@ static bool extract_netif_macs(mac_address *macs[MAX_NET_IFACES], const char *pa
         pr_loc_err("\"%s\" is not implemented, use %s...%s instead >>>%s<<<", CMDLINE_KT_MACS, CMDLINE_KT_MAC1,
                    CMDLINE_KT_MAC4, param_pointer);
 
-        return false;
+        return true;
     }
 
     //mac1=...mac8= are valid options. ASCII for 1 is 49, ASCII for 8 is 56
