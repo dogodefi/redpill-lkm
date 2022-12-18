@@ -11,6 +11,7 @@ mkdir -p "${DEST_PATH}"
 if [ -f ./PLATFORMS ]; then
   #cp ./PLATFORMS PLATFORMS
   #cat ./PLATFROMS
+  ls
 else
   curl -sLO "https://github.com/fbelavenuto/arpl/raw/main/PLATFORMS"
 fi
