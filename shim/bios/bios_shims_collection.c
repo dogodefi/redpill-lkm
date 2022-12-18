@@ -24,6 +24,15 @@ static int shim_get_gpio_pin_usable(int *pin)
     return 0;
 }
 
+static int shim_set_gpio_pin_usable(int *pin)
+{
+    pr_loc_dbg("set_gpio pin info 0  %d", pin[0]);
+    pr_loc_dbg("set_gpio pin info 1  %d", pin[1]);
+    pr_loc_dbg("set_gpio pin info 2  %d", pin[2]);
+    pr_loc_dbg("set_gpio pin info 3  %d", pin[3]);
+    return 0;
+}
+
 static int bios_get_buz_clr(unsigned char *state)
 {
     *state = 0;
@@ -34,7 +43,7 @@ static int bios_get_buz_clr(unsigned char *state)
 DECLARE_NULL_ZERO_INT(VTK_SET_FAN_STATE);
 DECLARE_NULL_ZERO_INT(VTK_SET_DISK_LED);
 DECLARE_NULL_ZERO_INT(VTK_SET_PWR_LED);
-DECLARE_NULL_ZERO_INT(VTK_SET_GPIO_PIN);
+// DECLARE_NULL_ZERO_INT(VTK_SET_GPIO_PIN);
 DECLARE_NULL_ZERO_INT(VTK_SET_GPIO_PIN_BLINK);
 DECLARE_NULL_ZERO_INT(VTK_SET_ALR_LED);
 DECLARE_NULL_ZERO_INT(VTK_SET_BUZ_CLR);
@@ -121,8 +130,9 @@ bool shim_bios_module(const struct hw_config *hw, struct module *mod, unsigned l
     SHIM_TO_NULL_ZERO_INT(VTK_SET_FAN_STATE);
     SHIM_TO_NULL_ZERO_INT(VTK_SET_DISK_LED);
     SHIM_TO_NULL_ZERO_INT(VTK_SET_PWR_LED);
-    SHIM_TO_NULL_ZERO_INT(VTK_SET_GPIO_PIN);
+    // SHIM_TO_NULL_ZERO_INT(VTK_SET_GPIO_PIN);
     _shim_bios_module_entry(VTK_GET_GPIO_PIN, shim_get_gpio_pin_usable);
+    _shim_bios_module_entry(VTK_SET_GPIO_PIN, shim_set_gpio_pin_usable);
     SHIM_TO_NULL_ZERO_INT(VTK_SET_GPIO_PIN_BLINK);
     SHIM_TO_NULL_ZERO_INT(VTK_SET_ALR_LED);
     _shim_bios_module_entry(VTK_GET_BUZ_CLR, bios_get_buz_clr);

@@ -545,7 +545,11 @@ int vpci_remove_all_devices_and_buses(void)
     for_each_bus_idx() {
         list_for_each_entry_safe(pci_dev, pci_dev_n, &buses[i]->devices, bus_list) {
             pr_loc_dbg("Detaching vDEV dev=%02x fn=%02x from bus=%02x [add=%d]", PCI_SLOT(pci_dev->devfn),
+#if LINUX_VERSION_CODE <= KERNEL_VERSION(5,0,0)
                        PCI_FUNC(pci_dev->devfn), buses[i]->number, pci_dev->is_added);
+#else
+                       PCI_FUNC(pci_dev->devfn), buses[i]->number, 0);  // Not found a replacement for pci_dev->is_added
+#endif
             pci_stop_and_remove_bus_device(pci_dev);
         }
     }

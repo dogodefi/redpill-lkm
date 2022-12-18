@@ -35,6 +35,8 @@
 #include "../../internal/scsi/scsi_notifier.h"
 #include <scsi/scsi_device.h> //struct scsi_device
 #include <scsi/scsi_host.h> //struct Scsi_Host, SYNO_PORT_TYPE_*
+#include "../../config/runtime_config.h"
+#include "../../config/platform_types.h"
 
 #define SHIM_NAME "SATA port emulator"
 #define VIRTIO_HOST_ID "Virtio SCSI HBA"
@@ -45,7 +47,8 @@
 static bool is_fixable(struct scsi_device *sdp)
 {
     return sdp->host->hostt->syno_port_type == SYNO_PORT_TYPE_SAS ||
-           (sdp->host->hostt->syno_port_type != SYNO_PORT_TYPE_SATA &&
+           (current_config.hw_config->is_dt == false &&                 // Device-tree models causes a kernel panic if type is changed
+            sdp->host->hostt->syno_port_type != SYNO_PORT_TYPE_SATA &&
             strcmp(sdp->host->hostt->name, VIRTIO_HOST_ID) == 0);
 }
 

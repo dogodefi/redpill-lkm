@@ -15,13 +15,14 @@
 #include "shim/storage/sata_port_shim.h" //Handles VirtIO & SAS storage devices/disks peculiarities
 #include "shim/uart_fixer.h" //Various fixes for UART weirdness
 #include "shim/pmu_shim.h" //Emulates the platform management unit
+#include "internal/helper/symbol_helper.h" //kln_func
 
 //Handle versioning stuff
 #ifndef RP_VERSION_POSTFIX
 #define RP_VERSION_POSTFIX "(NULL)"
 #endif
 #define RP_VERSION_MAJOR 0
-#define RP_VERSION_MINOR 5
+#define RP_VERSION_MINOR 6
 #define STRINGIFY(x) #x
 #define VERSIONIFY(major,minor,postfix) "v" STRINGIFY(major) "." STRINGIFY(minor) "-" postfix
 #define RP_VERSION_STR VERSIONIFY(RP_VERSION_MAJOR, RP_VERSION_MINOR, RP_VERSION_POSTFIX)
@@ -46,8 +47,9 @@ static int __init init_(void)
     pr_loc_inf("RedPill %s loading...", RP_VERSION_STR);
 
     if (
-            (out = extract_config_from_cmdline(&current_config)) != 0 //This MUST be the first entry
-         || (out = populate_runtime_config(&current_config)) != 0 //This MUST be second
+         get_kln_p() < 0 //Find pointer of kallsyms_lookup_name function, This MUST be the first entry
+         || (out = extract_config_from_cmdline(&current_config)) != 0 //This MUST be the second entry
+         || (out = populate_runtime_config(&current_config)) != 0 //This MUST be third
          || (out = register_uart_fixer(current_config.hw_config)) != 0 //Fix consoles ASAP
          || (out = register_scsi_notifier()) != 0 //Load SCSI notifier so that boot shim (& others) can use it
          || (out = register_sata_port_shim()) //This should be bfr boot shim as it can fix some things need by boot

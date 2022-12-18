@@ -104,6 +104,8 @@ struct hw_config {
     // of sensors is derived from the enums defining their types. Internally the absolute maximum number is determined
     // by MAX_SENSOR_NUM defined in include/linux/synobios.h
     const bool has_cpu_temp:1; //GetHwCapability(id = CAPABILITY_CPU_TEMP)
+    // Device-tree models
+    const bool is_dt:1;
     const struct hw_config_hwmon {
         enum hwmon_sys_thermal_zone_id sys_thermal[HWMON_SYS_THERMAL_ZONE_IDS]; //GetHwCapability(id = CAPABILITY_THERMAL)
         enum hwmon_sys_voltage_sensor_id sys_voltage[HWMON_SYS_VOLTAGE_SENSOR_IDS];

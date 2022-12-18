@@ -1,3 +1,6 @@
+/output
+test*.sh
+
 # Prerequisites
 *.d
 

@@ -39,4 +39,12 @@
 #define UART_BUG_SWAPPED //indicates that first two UARTs are swapped (sic!). Yes, we do consider it a fucking bug.
 #endif
 
+// CONFIG_SYNO_FIX_TTYS_FUNCTIONS=y
+// CONFIG_SYNO_TTYS_FUN_NUM=2
+#ifdef CONFIG_SYNO_TTYS_FUN_NUM
+#define UART_SYNO_TTYS_FUN_NUM CONFIG_SYNO_TTYS_FUN_NUM // 看着像群晖独占的口数 模拟时直接跳过
+#else
+#define UART_SYNO_TTYS_FUN_NUM 0
+#endif
+
 #endif //REDPILL_UART_DEFS_H

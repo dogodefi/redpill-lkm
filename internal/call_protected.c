@@ -1,7 +1,8 @@
 #include "call_protected.h"
 #include "../common.h"
 #include <linux/errno.h> //common exit codes
-#include <linux/kallsyms.h> //kallsyms_lookup_name()
+//#include <linux/kallsyms.h> //kallsyms_lookup_name()
+#include "helper/symbol_helper.h" //kln_func
 #include <linux/module.h> //symbol_get()/put
 
 //This will eventually stop working (since Linux >=5.7.0 has the kallsyms_lookup_name() removed)
@@ -19,7 +20,7 @@
   return_type _##org_function_name(call_args)                                                     \
   {                                                                                               \
       if (unlikely(org_function_name##__addr == 0)) {                                             \
-          org_function_name##__addr = kallsyms_lookup_name(#org_function_name);                   \
+          org_function_name##__addr = kln_func(#org_function_name);                               \
           if (org_function_name##__addr == 0) {                                                   \
               pr_loc_bug("Failed to fetch %s() syscall address", #org_function_name);             \
               return fail_return;                                                                 \
@@ -47,8 +48,7 @@
                      #org_function_name, system_state);                                                \
           return fail_return;                                                                          \
       }                                                                                                \
-                                                                                                       \
-      org_function_name##__addr = kallsyms_lookup_name(#org_function_name);                            \
+      org_function_name##__addr = kln_func(#org_function_name);                                        \
       if (org_function_name##__addr == 0) {                                                            \
           pr_loc_bug("Failed to fetch %s() syscall address", #org_function_name);                      \
           return fail_return;                                                                          \
