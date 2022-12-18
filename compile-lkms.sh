@@ -9,7 +9,7 @@ TOOLKIT_VER="7.1"
 mkdir -p "${DEST_PATH}"
 
 if [ -f ./PLATFORMS ]; then
-  cp ./PLATFORMS PLATFORMS
+  #cp ./PLATFORMS PLATFORMS
   cat PLATFROMS
 else
   curl -sLO "https://github.com/fbelavenuto/arpl/raw/main/PLATFORMS"
