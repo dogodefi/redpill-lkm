@@ -10,7 +10,7 @@ mkdir -p "${DEST_PATH}"
 
 if [ -f ./PLATFORMS ]; then
   #cp ./PLATFORMS PLATFORMS
-  cat PLATFROMS
+  cat ./PLATFROMS
 else
   curl -sLO "https://github.com/fbelavenuto/arpl/raw/main/PLATFORMS"
 fi
